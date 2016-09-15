@@ -1,19 +1,57 @@
 {
-  "name": "butter.js",
-  "description": "pixel sorting for <canvas>",
-  "author": "Matthew Brandly",
-  "version": "0.1.0",
+  "name": "@thewhodidthis/butter",
+  "version": "0.0.0",
+  "description": "Helps with pixel sorting",
+  "keywords": [
+    "picture",
+    "canvas",
+    "pixels"
+  ],
+  "main": "index.js",
+  "homepage": "https://github.com/thewhodidthis/butter#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thewhodidthis/butter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thewhodidthis/butter/issues"
+  },
+  "directories": {
+    "example": "example"
+  },
+  "config": {
+    "jscsrc": ".jscsrc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "clear": "npm run clear:dist && npm run clear:logs",
+    "clear:dist": "rm -rf dist/",
+    "clear:logs": "rm -f *.log",
+    "lint": "(jshint index.js & jscs index.js --reporter=inlinesingle) 2>&1 | tee lint-js.log",
+    "postlint": "find lint-js.log -size 0 -print0 | xargs -0 rm",
+    "prestart": "npm run build",
+    "start": "npm run watch",
+    "serve": "php -S localhost:8000 -t example/",
+    "watch": "nodemon -e js -w index.js -x 'npm run build'",
+    "example": "npm run build && npm run build:demo",
+    "prebuild": "mkdir -p dist/",
+    "build": "browserify index.js -s Butter -o ./dist/butter.js",
+    "build:min": "browserify index.js -s Butter | uglifyjs -mc -o ./dist/butter.min.js",
+    "build:demo": "ln -siv \"$(pwd)/dist/butter.js\" example",
+    "postbuild": "npm run build:min",
+    "preversion": "npm run clear:logs"
+  },
+  "engines": {
+    "node": ">=4.2.4",
+    "npm": ">=3.5.3"
+  },
   "devDependencies": {
-    "gulp": "^3.8.8",
-    "gulp-concat": "^2.1.7",
-    "gulp-htmlbuild": "^0.1.1",
-    "gulp-util": "~2.2.14",
-    "gulp-coffee": "~1.4.1",
-    "gulp-sass": "^0.6.0",
-    "gulp-uglify": "~0.2.0",
-    "gulp-minify-css": "~0.3.0",
-    "express": "^3.4.8",
-    "path": "~0.4.9",
-    "gulp-autoprefixer": "^1.0.1"
-  }
+    "jscs": "latest",
+    "jshint": "latest",
+    "uglify-js": "latest",
+    "browserify": "latest",
+    "nodemon": "latest"
+  },
+  "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
+  "license": "Unlicense"
 }

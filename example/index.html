@@ -1,0 +1,32 @@
+<!doctype html>
+<html class="html no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+    <title>Butter demo</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+
+  <body>
+    <figure id="figure">
+      <canvas id="canvas" width="640" height="360"></canvas>
+      <figcaption>
+        <p><strong>butter.js</strong> Helps do pixel sorting</p>
+      </figcaption>
+    </figure>
+
+    <noscript>please enable javascript</noscript>
+    <script id="worker" type="javascript/worker">
+      importScripts(location.origin + '/butter.js');
+
+      self.addEventListener('message', function(e) {
+        var filter = new Butter();
+
+        self.postMessage({
+          result: filter._run(e.data.source)
+        });
+      }, false);
+    </script>
+    <script src="index.js"></script>
+  </body>
+</html>

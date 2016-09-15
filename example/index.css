@@ -1,0 +1,51 @@
+html {
+  overflow: scroll;
+}
+
+body,
+p,
+figure {
+  margin: 0;
+}
+
+figure {
+  top: 50%;
+  width: 100%;
+  height: 360px;
+  margin-top: -180px;
+  position: absolute;
+}
+
+figcaption {
+  font-size: 90%;
+  margin-top: 0.5rem;
+}
+
+figcaption p {
+  padding-left: 0.5rem;
+}
+
+canvas {
+  display: block;
+  cursor: pointer;
+  background: #000;
+}
+
+.is-iframe {
+  overflow: hidden;
+}
+
+.is-iframe figure {
+  top: 0;
+  margin: 0;
+}
+
+.is-iframe figcaption {
+  display: none;
+}
+
+.is-iframe canvas {
+  width: 100%;
+  max-width: 100%;
+}
+
