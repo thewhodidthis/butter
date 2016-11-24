@@ -7,6 +7,7 @@
     "canvas",
     "pixels"
   ],
+  "jsnext:main": "index.es",
   "main": "index.js",
   "homepage": "https://github.com/thewhodidthis/butter#readme",
   "repository": {
@@ -20,37 +21,41 @@
     "example": "example"
   },
   "config": {
-    "jscsrc": ".jscsrc"
+    "remote": "thewhodidthis@umfufu:www/example/butter/"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clear": "npm run clear:dist && npm run clear:logs",
     "clear:dist": "rm -rf dist/",
     "clear:logs": "rm -f *.log",
-    "lint": "(jshint index.js & jscs index.js --reporter=inlinesingle) 2>&1 | tee lint-js.log",
-    "postlint": "find lint-js.log -size 0 -print0 | xargs -0 rm",
-    "prestart": "npm run build",
+    "lint": "eslint index.es; exit 0",
     "start": "npm run watch",
-    "serve": "php -S localhost:8000 -t example/",
-    "watch": "nodemon -e js -w index.js -x 'npm run build'",
-    "example": "npm run build && npm run build:demo",
+    "watch": "rollup -c -w",
+    "preexample": "npm run build",
+    "example": "npm run example:link && npm run example:serve",
+    "example:link": "ln -siv \"$(pwd)/dist/butter.min.js\" example/butter.js",
+    "example:push": "rsync -avruzLPC --exclude=.DS_Store ./example/ $npm_package_config_remote",
+    "example:serve": "php -S localhost:8000 -t example/",
     "prebuild": "mkdir -p dist/",
-    "build": "browserify index.js -s Butter -o ./dist/butter.js",
-    "build:min": "browserify index.js -s Butter | uglifyjs -mc -o ./dist/butter.min.js",
-    "build:demo": "ln -siv \"$(pwd)/dist/butter.js\" example",
+    "build": "rollup -c",
+    "build:min": "uglifyjs dist/butter.js -cm > dist/butter.min.js",
     "postbuild": "npm run build:min",
-    "preversion": "npm run clear:logs"
+    "preversion": "npm run clear && npm run build"
   },
   "engines": {
     "node": ">=4.2.4",
     "npm": ">=3.5.3"
   },
   "devDependencies": {
-    "jscs": "latest",
-    "jshint": "latest",
-    "uglify-js": "latest",
-    "browserify": "latest",
-    "nodemon": "latest"
+    "babel-eslint": "latest",
+    "babel-preset-es2015": "latest",
+    "eslint": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-config-airbnb-base": "latest",
+    "rollup": "latest",
+    "rollup-plugin-babel": "latest",
+    "rollup-watch": "latest",
+    "uglify-js": "latest"
   },
   "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
   "license": "Unlicense"
