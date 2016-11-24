@@ -2,15 +2,13 @@
 
 function Butter(threshold, flip) {
   this.threshold = this.getColor(threshold || 'ff5e7689');
-
   this.flip = flip ? -1 : 1;
 }
 
 Butter.prototype = {
   constructor: Butter,
 
-  _run: function _run(sourceData) {
-
+  run: function run(sourceData) {
     // Source data width
     var sourceW = sourceData.width;
 
@@ -33,8 +31,8 @@ Butter.prototype = {
       var rowStart = row * sourceW;
       var rowWidth = rowStart + sourceW;
 
-      var rangeStart = 0;
       var range = sourceView32.subarray(rowStart, rowWidth);
+      var rangeStart = 0;
 
       for (var colorIndex = 0; colorIndex < range.length; colorIndex += 1) {
         var color = range[colorIndex];
@@ -54,15 +52,12 @@ Butter.prototype = {
 
     return sourceData;
   },
-
   that: function that(source) {
-
     // TODO: Check type of args, allow images?
     var sourceData = source.getImageData(0, 0, source.canvas.width, source.canvas.height);
 
-    return this._run(sourceData);
+    return this.run(sourceData);
   },
-
   getColor: function getColor(color) {
     return parseInt(color, 16);
   }
