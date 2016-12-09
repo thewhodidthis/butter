@@ -46,6 +46,7 @@
     "node": ">=4.2.4",
     "npm": ">=3.5.3"
   },
+  "dependencies": {},
   "devDependencies": {
     "babel-eslint": "latest",
     "babel-preset-es2015": "latest",
