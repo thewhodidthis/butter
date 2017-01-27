@@ -20,7 +20,7 @@
       importScripts(location.origin + '/butter.js');
 
       self.addEventListener('message', function(e) {
-        var filter = new Butter();
+        var filter = new Butter('ff5e7689', -1);
 
         self.postMessage({
           result: filter.run(e.data.source)
