@@ -7,8 +7,8 @@
     "canvas",
     "pixels"
   ],
-  "jsnext:main": "index.es",
   "main": "index.js",
+  "module": "index.es",
   "homepage": "https://github.com/thewhodidthis/butter#readme",
   "repository": {
     "type": "git",
@@ -21,7 +21,7 @@
     "example": "example"
   },
   "config": {
-    "remote": "thewhodidthis@umfufu:www/example/butter/"
+    "remote": "thewhodidthis@zazie:www/example/butter/"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
