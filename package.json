@@ -24,23 +24,14 @@
     "remote": "thewhodidthis@zazie:www/example/butter/"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clear": "npm run clear:dist && npm run clear:logs",
-    "clear:dist": "rm -rf dist/",
-    "clear:logs": "rm -f *.log",
-    "lint": "eslint index.es; exit 0",
-    "start": "npm run watch",
-    "watch": "rollup -c -w",
-    "preexample": "npm run build",
+    "test": "browserify test/*.js | testling -x open",
+    "lint": "eslint index.es test/*.js",
+    "start": "rollup -c && uglifyjs dist/butter.js -cmo dist/butter.min.js",
+    "preexample": "npm start",
     "example": "npm run example:link && npm run example:serve",
     "example:link": "ln -siv \"$(pwd)/dist/butter.min.js\" example/butter.js",
-    "example:push": "rsync -avruzLPC --exclude=.DS_Store ./example/ $npm_package_config_remote",
     "example:serve": "php -S localhost:8000 -t example/",
-    "prebuild": "mkdir -p dist/",
-    "build": "rollup -c",
-    "build:min": "uglifyjs dist/butter.js -cm > dist/butter.min.js",
-    "postbuild": "npm run build:min",
-    "preversion": "npm run clear && npm run build"
+    "example:push": "rsync -avruzLPC --exclude=.DS_Store ./example/ $npm_package_config_remote"
   },
   "engines": {
     "node": ">=4.2.4",
@@ -49,13 +40,16 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "latest",
+    "babel-plugin-external-helpers": "latest",
     "babel-preset-es2015": "latest",
-    "eslint": "latest",
-    "eslint-plugin-import": "latest",
+    "browserify": "latest",
+    "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "latest",
+    "eslint-plugin-import": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
-    "rollup-watch": "latest",
+    "tape": "latest",
+    "testling": "latest",
     "uglify-js": "latest"
   },
   "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
