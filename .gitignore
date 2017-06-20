@@ -1,5 +1,3 @@
-.DS_Store
 *.log
-*.bak*
-node_modules/
+node_modules
 example/butter.js
