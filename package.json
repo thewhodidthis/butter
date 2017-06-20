@@ -3,9 +3,9 @@
   "version": "0.1.1",
   "description": "Helps with pixel sorting",
   "keywords": [
-    "picture",
     "canvas",
-    "pixels"
+    "pixels",
+    "sorting"
   ],
   "main": "index.js",
   "module": "index.es",
