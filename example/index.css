@@ -18,7 +18,7 @@ figure {
 
 figcaption {
   font-size: 90%;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
 }
 
 figcaption p {
@@ -29,6 +29,11 @@ canvas {
   display: block;
   cursor: pointer;
   background: #000;
+}
+
+noscript {
+  margin: 6px;
+  font: italic 12px/28px arial, sans-serif;
 }
 
 .is-iframe {
