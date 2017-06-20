@@ -1,14 +1,15 @@
 <!doctype html>
-<html class="html no-js">
+<html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
-    <title>Butter demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>&middot; Butter &middot;</title>
+    <link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgo=">
     <link rel="stylesheet" href="index.css" />
   </head>
 
   <body>
-    <figure id="figure">
+    <figure>
       <canvas id="canvas" width="640" height="360"></canvas>
       <figcaption>
         <p><strong>butter.js</strong> Helps do pixel sorting</p>
@@ -19,12 +20,10 @@
     <script id="worker" type="javascript/worker">
       importScripts(location.origin + '/butter.js');
 
-      self.addEventListener('message', function(e) {
-        var filter = new Butter('ff5e7689', -1);
+      self.addEventListener('message', (e) => {
+        const filter = butter({ flip: true });
 
-        self.postMessage({
-          result: filter.run(e.data.source)
-        });
+        self.postMessage({ result: filter(e.data.source) });
       }, false);
     </script>
     <script src="index.js"></script>
