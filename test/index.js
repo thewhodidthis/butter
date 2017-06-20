@@ -1,16 +1,8 @@
 const test = require('tape');
-const butter = require('../');
-
-// Add favicon
-const linkTag = document.createElement('link');
-
-linkTag.href = 'data:;base64,iVBORw0KGgo=';
-linkTag.rel = 'icon';
-
-document.head.appendChild(linkTag);
+const filter = require('../');
 
 test('will return', (t) => {
-  t.equal(typeof butter, 'function', 'returns funtion on init');
+  t.equal(typeof filter, 'function', 'returns funtion on init');
   t.end();
 });
 
