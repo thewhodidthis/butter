@@ -25,13 +25,13 @@
   },
   "scripts": {
     "test": "node test",
-    "lint": "eslint index.es test/*.js",
+    "lint": "eslint . example --ext .es test/*.js",
     "start": "rollup -c && uglifyjs dist/butter.js -cmo dist/butter.min.js",
-    "preexample": "npm start",
-    "example": "npm run example:link && npm run example:serve",
-    "example:link": "ln -siv \"$(pwd)/dist/butter.min.js\" example/butter.js",
+    "preexample": "ln -fsv \"$(pwd)/dist/butter.min.js\" example/butter.js",
+    "example": "npm run example:build && npm run example:serve",
+    "example:build": "rollup -c -i example/index.es -f iife -o example/index.js",
     "example:serve": "php -S localhost:8000 -t example/",
-    "example:push": "rsync -avruzLPC --exclude=.DS_Store ./example/ $npm_package_config_remote"
+    "example:press": "rsync -avruzLPC --delete --exclude=.DS_Store ./example/ $npm_package_config_remote"
   },
   "engines": {
     "node": ">=4.2.4",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "babel-eslint": "latest",
     "babel-plugin-external-helpers": "latest",
-    "babel-preset-es2015": "latest",
+    "babel-preset-latest": "latest",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "latest",
     "eslint-plugin-import": "latest",
