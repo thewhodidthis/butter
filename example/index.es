@@ -1,24 +1,21 @@
-(function () {
-'use strict';
+const canvas = document.querySelector('canvas');
+const source = canvas.getContext('2d');
+const filter = canvas.cloneNode().getContext('2d');
 
-var canvas = document.querySelector('canvas');
-var source = canvas.getContext('2d');
-var filter = canvas.cloneNode().getContext('2d');
+const master = document.createElement('img');
+const output = source.getImageData(0, 0, canvas.width, canvas.height);
 
-var master = document.createElement('img');
-var output = source.getImageData(0, 0, canvas.width, canvas.height);
-
-var workerBlob = new Blob([document.getElementById('worker').textContent]);
-var workerBlobUrl = (window.URL || window.webkitURL).createObjectURL(workerBlob);
-var worker = new Worker(workerBlobUrl);
+const workerBlob = new Blob([document.getElementById('worker').textContent]);
+const workerBlobUrl = (window.URL || window.webkitURL).createObjectURL(workerBlob);
+const worker = new Worker(workerBlobUrl);
 
 if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
 }
 
-var toggle = false;
+let toggle = false;
 
-canvas.addEventListener('click', function (e) {
+canvas.addEventListener('click', (e) => {
   e.preventDefault();
 
   if (toggle) {
@@ -36,11 +33,11 @@ canvas.addEventListener('click', function (e) {
   toggle = !toggle;
 }, false);
 
-worker.addEventListener('message', function (e) {
+worker.addEventListener('message', (e) => {
   output.data.set(e.data.result.data);
 });
 
-master.addEventListener('load', function () {
+master.addEventListener('load', () => {
   filter.translate(filter.canvas.width * 0.5, filter.canvas.height * 0.5);
   filter.rotate(Math.PI * 0.5);
   filter.drawImage(master, -filter.canvas.width * 0.5, -filter.canvas.height * 0.5);
@@ -50,4 +47,3 @@ master.addEventListener('load', function () {
 
 master.setAttribute('src', '/master.jpg');
 
-}());
