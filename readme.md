@@ -3,7 +3,7 @@
 
 ### Setup
 ```sh
-npm install thewhodidthis/butter --save
+npm install thewhodidthis/butter
 ```
 
 ### Usage
@@ -20,4 +20,3 @@ open http://localhost:8000
 ### More
 - [butter.js](https://github.com/brandly/butter.js "Original butter.js")
 - [ASDFPixelSort](https://github.com/kimasendorf/ASDFPixelSort "Kim Asendorf's processing code")
-- [r/pixelsorting](https://www.reddit.com/r/pixelsorting/ "Pixel sorting subreddit")
