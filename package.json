@@ -24,7 +24,7 @@
     "remote": "thewhodidthis@zazie:www/example/butter/"
   },
   "scripts": {
-    "test": "node test",
+    "test": "browserify test/*.js | testling -x open",
     "lint": "eslint . example --ext .es test/*.js",
     "start": "rollup -c && uglifyjs dist/butter.js -cmo dist/butter.min.js",
     "preexample": "ln -fsv \"$(pwd)/dist/butter.min.js\" example/butter.js",
@@ -42,12 +42,14 @@
     "babel-eslint": "latest",
     "babel-plugin-external-helpers": "latest",
     "babel-preset-latest": "latest",
+    "browserify": "latest",
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "latest",
     "eslint-plugin-import": "latest",
     "rollup": "latest",
     "rollup-plugin-babel": "latest",
     "tape": "latest",
+    "testling": "latest",
     "uglify-js": "latest"
   },
   "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
