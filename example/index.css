@@ -1,39 +1,34 @@
-html {
-  overflow: scroll;
+body {
+  margin: 0;
+  padding: 0.5rem;
+  overflow: hidden;
+  box-sizing: border-box;
+  font: 16px/1.25 arial, sans-serif;
 }
 
-body,
-p,
-figure {
+small {
+  font-size: 0.75rem;
+}
+
+p {
   margin: 0;
+  font-size: 0.875rem;
 }
 
 figure {
   top: 50%;
-  width: 100%;
-  height: 360px;
-  margin-top: -180px;
+  left: 50%;
   position: absolute;
+  text-align: center;
+  margin: -180px 0 0 -320px;
 }
 
 figcaption {
-  font-size: 90%;
-  margin: 0.5rem 0;
-}
-
-figcaption p {
-  padding-left: 0.5rem;
+  margin: 0.5rem;
 }
 
 canvas {
   display: block;
-  cursor: pointer;
-  background: #000;
-}
-
-noscript {
-  margin: 6px;
-  font: italic 12px/28px arial, sans-serif;
 }
 
 .is-iframe {
@@ -42,7 +37,9 @@ noscript {
 
 .is-iframe figure {
   top: 0;
+  left: 0;
   margin: 0;
+  width: 100%;
 }
 
 .is-iframe figcaption {

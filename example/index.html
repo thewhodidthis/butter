@@ -2,29 +2,29 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>&middot; Butter &middot;</title>
     <link rel="icon" href="data:image/x-icon;base64,iVBORw0KGgo=">
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="index.css">
   </head>
 
   <body>
     <figure>
-      <canvas id="canvas" width="640" height="360"></canvas>
+      <canvas width="640" height="360"><img src="screenshot.png" alt="screenshot.png" /></canvas>
+
       <figcaption>
         <p><strong>butter.js</strong> Helps do pixel sorting</p>
       </figcaption>
     </figure>
 
-    <noscript>please enable javascript</noscript>
+    <noscript><small><em>please enable javascript</em></small></noscript>
     <script id="worker" type="javascript/worker">
       importScripts(location.origin + '/butter.js');
 
       self.addEventListener('message', (e) => {
-        const filter = butter({ flip: true });
+        const filter = Butter({ flip: true });
 
         self.postMessage({ result: filter(e.data.source) });
-      }, false);
+      });
     </script>
     <script src="index.js"></script>
   </body>
