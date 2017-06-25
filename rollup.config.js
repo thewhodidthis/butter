@@ -8,7 +8,7 @@ export default {
   targets: [
     {
       format: 'iife',
-      moduleName: 'butter',
+      moduleName: 'Butter',
       dest: 'dist/butter.js'
     },
     {
