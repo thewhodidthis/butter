@@ -2,11 +2,11 @@
 'use strict';
 
 var canvas = document.querySelector('canvas');
-var source = canvas.getContext('2d');
-var filter = canvas.cloneNode().getContext('2d');
+var master = canvas.getContext('2d');
+var buffer = canvas.cloneNode().getContext('2d');
 
-var master = document.createElement('img');
-var output = source.getImageData(0, 0, canvas.width, canvas.height);
+var source = document.createElement('img');
+var output = master.getImageData(0, 0, canvas.width, canvas.height);
 
 var workerBlob = new Blob([document.getElementById('worker').textContent]);
 var workerBlobUrl = (window.URL || window.webkitURL).createObjectURL(workerBlob);
@@ -22,15 +22,15 @@ canvas.addEventListener('click', function (e) {
   e.preventDefault();
 
   if (toggle) {
-    source.drawImage(master, 0, 0);
+    master.drawImage(source, 0, 0);
   } else {
-    filter.putImageData(output, 0, 0);
+    buffer.putImageData(output, 0, 0);
 
-    source.save();
-    source.translate(source.canvas.width * 0.5, source.canvas.height * 0.5);
-    source.rotate(-Math.PI * 0.5);
-    source.drawImage(filter.canvas, -source.canvas.width * 0.5, -source.canvas.height * 0.5);
-    source.restore();
+    master.save();
+    master.translate(master.canvas.width * 0.5, master.canvas.height * 0.5);
+    master.rotate(-Math.PI * 0.5);
+    master.drawImage(buffer.canvas, -master.canvas.width * 0.5, -master.canvas.height * 0.5);
+    master.restore();
   }
 
   toggle = !toggle;
@@ -40,14 +40,14 @@ worker.addEventListener('message', function (e) {
   output.data.set(e.data.result.data);
 });
 
-master.addEventListener('load', function () {
-  filter.translate(filter.canvas.width * 0.5, filter.canvas.height * 0.5);
-  filter.rotate(Math.PI * 0.5);
-  filter.drawImage(master, -filter.canvas.width * 0.5, -filter.canvas.height * 0.5);
-  source.drawImage(master, 0, 0);
-  worker.postMessage({ source: filter.getImageData(0, 0, canvas.width, canvas.height) });
+source.addEventListener('load', function () {
+  buffer.translate(buffer.canvas.width * 0.5, buffer.canvas.height * 0.5);
+  buffer.rotate(Math.PI * 0.5);
+  buffer.drawImage(source, -buffer.canvas.width * 0.5, -buffer.canvas.height * 0.5);
+  master.drawImage(source, 0, 0);
+  worker.postMessage({ source: buffer.getImageData(0, 0, canvas.width, canvas.height) });
 });
 
-master.setAttribute('src', '/master.jpg');
+source.setAttribute('src', 'master.jpg');
 
 }());
