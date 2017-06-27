@@ -17,15 +17,6 @@
     </figure>
 
     <noscript><small><em>please enable javascript</em></small></noscript>
-    <script id="worker" type="javascript/worker">
-      importScripts(location.origin + '/butter.js');
-
-      self.addEventListener('message', (e) => {
-        const filter = Butter({ flip: true });
-
-        self.postMessage({ result: filter(e.data.source) });
-      });
-    </script>
     <script src="index.js"></script>
   </body>
 </html>

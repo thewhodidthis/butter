@@ -7,10 +7,7 @@ var buffer = canvas.cloneNode().getContext('2d');
 
 var source = document.createElement('img');
 var output = master.getImageData(0, 0, canvas.width, canvas.height);
-
-var workerBlob = new Blob([document.getElementById('worker').textContent]);
-var workerBlobUrl = (window.URL || window.webkitURL).createObjectURL(workerBlob);
-var worker = new Worker(workerBlobUrl);
+var worker = new Worker('worker.js');
 
 if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
