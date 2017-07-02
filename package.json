@@ -17,9 +17,6 @@
   "bugs": {
     "url": "https://github.com/thewhodidthis/butter/issues"
   },
-  "directories": {
-    "example": "example"
-  },
   "config": {
     "remote": "thewhodidthis@zazie:www/example/butter/"
   },
