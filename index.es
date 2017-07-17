@@ -1,48 +1,43 @@
 const Butter = (options) => {
-  const settings = Object.assign({ cutoff: 'ff5e7689', flip: false }, options);
+  // Avoid default params for now
+  const config = Object.assign({ cutoff: 'ff5e7689', flip: false }, options)
 
   // Over or under (black/white)
-  const aspect = settings.flip ? -1 : 1;
+  const aspect = config.flip ? -1 : 1
 
-  // Calculate threshold
-  const cutoff = parseInt(settings.cutoff, 16);
+  // Threshold color in hex
+  const cutoff = parseInt(config.cutoff, 16)
 
   // Expects and churns out `ImageData`
   return (source) => {
-    // Source data dimensions
-    const sourceW = source.width;
-    const sourceH = source.height;
+    const { height, width, data } = source
+    const view = new Uint32Array(data.buffer)
 
-    // Source colors 32bit
-    const sourceView32 = new Uint32Array(source.data.buffer);
+    for (let r = 0; r < height; r += 1) {
+      const start = r * width
+      const limit = start + width
+      const range = view.subarray(start, limit)
+      const scope = { start: 0, limit: range.length }
 
-    for (let row = 0; row < sourceH; row += 1) {
-      const rowStart = row * sourceW;
-      const rowWidth = rowStart + sourceW;
+      for (let i = 0; i < scope.limit; i += 1) {
+        const color = aspect * range[i]
+        const brink = aspect * cutoff
 
-      const range = sourceView32.subarray(rowStart, rowWidth);
-
-      let rangeStart = 0;
-
-      for (let colorIndex = 0, total = range.length; colorIndex < total; colorIndex += 1) {
-        const color = range[colorIndex];
-
-        if (aspect * color > aspect * cutoff && rangeStart === 0) {
-          rangeStart = colorIndex;
+        if (color > brink && scope.start === 0) {
+          scope.start = i
         }
 
-        if (aspect * color < aspect * cutoff && rangeStart !== 0) {
-          range.subarray(rangeStart, colorIndex).sort();
+        if (color < brink && scope.start !== 0) {
+          range.subarray(scope.start, i).sort()
 
           // Start again
-          rangeStart = 0;
+          scope.start = 0
         }
       }
     }
 
-    return source;
-  };
-};
+    return source
+  }
+}
 
-export default Butter;
-
+export default Butter

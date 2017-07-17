@@ -1,49 +1,48 @@
 'use strict';
 
-var Butter = function Butter(options) {
-  var settings = Object.assign({ cutoff: 'ff5e7689', flip: false }, options);
+var Butter = function (options) {
+  // Avoid default params for now
+  var config = Object.assign({ cutoff: 'ff5e7689', flip: false }, options);
 
   // Over or under (black/white)
-  var aspect = settings.flip ? -1 : 1;
+  var aspect = config.flip ? -1 : 1;
 
-  // Calculate threshold
-  var cutoff = parseInt(settings.cutoff, 16);
+  // Threshold color in hex
+  var cutoff = parseInt(config.cutoff, 16);
 
   // Expects and churns out `ImageData`
   return function (source) {
-    // Source data dimensions
-    var sourceW = source.width;
-    var sourceH = source.height;
+    var height = source.height;
+    var width = source.width;
+    var data = source.data;
+    var view = new Uint32Array(data.buffer);
 
-    // Source colors 32bit
-    var sourceView32 = new Uint32Array(source.data.buffer);
+    for (var r = 0; r < height; r += 1) {
+      var start = r * width;
+      var limit = start + width;
+      var range = view.subarray(start, limit);
+      var scope = { start: 0, limit: range.length };
 
-    for (var row = 0; row < sourceH; row += 1) {
-      var rowStart = row * sourceW;
-      var rowWidth = rowStart + sourceW;
+      for (var i = 0; i < scope.limit; i += 1) {
+        var color = aspect * range[i];
+        var brink = aspect * cutoff;
 
-      var range = sourceView32.subarray(rowStart, rowWidth);
-
-      var rangeStart = 0;
-
-      for (var colorIndex = 0, total = range.length; colorIndex < total; colorIndex += 1) {
-        var color = range[colorIndex];
-
-        if (aspect * color > aspect * cutoff && rangeStart === 0) {
-          rangeStart = colorIndex;
+        if (color > brink && scope.start === 0) {
+          scope.start = i;
         }
 
-        if (aspect * color < aspect * cutoff && rangeStart !== 0) {
-          range.subarray(rangeStart, colorIndex).sort();
+        if (color < brink && scope.start !== 0) {
+          range.subarray(scope.start, i).sort();
 
           // Start again
-          rangeStart = 0;
+          scope.start = 0;
         }
       }
     }
 
-    return source;
-  };
+    return source
+  }
 };
 
 module.exports = Butter;
+
