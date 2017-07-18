@@ -1,6 +1,6 @@
 {
   "name": "@thewhodidthis/butter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Helps with pixel sorting",
   "main": "index.js",
   "module": "index.es",
@@ -25,7 +25,9 @@
   },
   "eslintConfig": {
     "extends": "@thewhodidthis",
-    "globals": { "Uint32Array": true }
+    "globals": {
+      "Uint32Array": true
+    }
   },
   "engines": {
     "node": ">=4.2.4",
