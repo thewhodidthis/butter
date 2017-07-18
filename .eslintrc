@@ -1,9 +1,0 @@
-{
-  "extends": "airbnb-base",
-  "env": {
-    "browser": true
-  },
-  "rules": {
-    "comma-dangle": 1
-  }
-}
