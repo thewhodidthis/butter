@@ -1,21 +1,22 @@
+
 const Butter = (options) => {
   // Avoid default params for now
-  const config = Object.assign({ cutoff: 'ff5e7689', flip: false }, options)
+  const config = Object.assign({ cutoff: '5e7689', flip: false }, options)
 
   // Over or under (black/white)
   const aspect = config.flip ? -1 : 1
 
-  // Threshold color in hex
-  const cutoff = parseInt(config.cutoff, 16)
+  // Pad threshold color if need be
+  const cutoff = parseInt((`ffffffff${config.cutoff}`).slice(-8), 16)
 
-  // Expects and churns out `ImageData`
+  // Expects and returns out `ImageData`
   return (source) => {
-    const { height, width, data } = source
+    const { height: h, width: w, data } = source
     const view = new Uint32Array(data.buffer)
 
-    for (let r = 0; r < height; r += 1) {
-      const start = r * width
-      const limit = start + width
+    for (let r = 0; r < h; r += 1) {
+      const start = r * w
+      const limit = start + w
       const range = view.subarray(start, limit)
       const scope = { start: 0, limit: range.length }
 
