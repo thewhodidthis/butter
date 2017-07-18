@@ -1,46 +1,53 @@
-const canvas = document.querySelector('canvas');
-const master = canvas.getContext('2d');
-const buffer = canvas.cloneNode().getContext('2d');
-
-const source = document.createElement('img');
-const output = master.getImageData(0, 0, canvas.width, canvas.height);
-const worker = new Worker('worker.js');
+const images = document.querySelectorAll('li > img')
+const boards = document.querySelectorAll('canvas')
 
 if (window !== window.top) {
-  document.documentElement.classList.add('is-iframe');
+  document.documentElement.classList.add('is-iframe')
 }
 
-let toggle = false;
+const params = [
+  { cutoff: '332200', up: true },
+  { cutoff: '77838c' },
+  { cutoff: '81aeb6', up: true, flip: true }
+]
 
-canvas.addEventListener('click', (e) => {
-  e.preventDefault();
+Array.from(images).map(img => img.src).forEach((file, i) => {
+  const config = params[i]
+  const canvas = boards[i]
+  const master = canvas.getContext('2d')
+  const buffer = canvas.cloneNode().getContext('2d')
 
-  if (toggle) {
-    master.drawImage(source, 0, 0);
-  } else {
-    buffer.putImageData(output, 0, 0);
+  const source = document.createElement('img')
+  const output = master.getImageData(0, 0, canvas.height, canvas.width)
+  const worker = new Worker('worker.js')
 
-    master.save();
-    master.translate(master.canvas.width * 0.5, master.canvas.height * 0.5);
-    master.rotate(-Math.PI * 0.5);
-    master.drawImage(buffer.canvas, -master.canvas.width * 0.5, -master.canvas.height * 0.5);
-    master.restore();
-  }
+  worker.addEventListener('message', (e) => {
+    output.data.set(e.data.result.data)
+    buffer.putImageData(output, 0, 0)
 
-  toggle = !toggle;
-}, false);
+    master.save()
 
-worker.addEventListener('message', (e) => {
-  output.data.set(e.data.result.data);
-});
+    if (config.up) {
+      master.translate(0, canvas.height)
+      master.rotate(-Math.PI * 0.5)
+    }
 
-source.addEventListener('load', () => {
-  buffer.translate(buffer.canvas.width * 0.5, buffer.canvas.height * 0.5);
-  buffer.rotate(Math.PI * 0.5);
-  buffer.drawImage(source, -buffer.canvas.width * 0.5, -buffer.canvas.height * 0.5);
-  master.drawImage(source, 0, 0);
-  worker.postMessage({ source: buffer.getImageData(0, 0, canvas.width, canvas.height) });
-});
+    master.drawImage(buffer.canvas, 0, 0)
+    master.restore()
+  })
 
-source.setAttribute('src', 'master.jpg');
+  source.addEventListener('load', () => {
+    const angle = config.up ? Math.PI * 0.5 : 0
+    const shift = config.up ? -1 * canvas.height : 0
 
+    buffer.rotate(angle)
+    buffer.drawImage(source, 0, shift)
+
+    worker.postMessage({
+      config,
+      source: buffer.getImageData(0, 0, canvas.height, canvas.width)
+    })
+  })
+
+  source.setAttribute('src', file)
+})

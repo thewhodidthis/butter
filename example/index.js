@@ -1,50 +1,59 @@
 (function () {
 'use strict';
 
-var canvas = document.querySelector('canvas');
-var master = canvas.getContext('2d');
-var buffer = canvas.cloneNode().getContext('2d');
-
-var source = document.createElement('img');
-var output = master.getImageData(0, 0, canvas.width, canvas.height);
-var worker = new Worker('worker.js');
+var images = document.querySelectorAll('li > img');
+var boards = document.querySelectorAll('canvas');
 
 if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
 }
 
-var toggle = false;
+var params = [
+  { cutoff: '332200', up: true },
+  { cutoff: '77838c' },
+  { cutoff: '81aeb6', up: true, flip: true }
+];
 
-canvas.addEventListener('click', function (e) {
-  e.preventDefault();
+Array.from(images).map(function (img) { return img.src; }).forEach(function (file, i) {
+  var config = params[i];
+  var canvas = boards[i];
+  var master = canvas.getContext('2d');
+  var buffer = canvas.cloneNode().getContext('2d');
 
-  if (toggle) {
-    master.drawImage(source, 0, 0);
-  } else {
+  var source = document.createElement('img');
+  var output = master.getImageData(0, 0, canvas.height, canvas.width);
+  var worker = new Worker('worker.js');
+
+  worker.addEventListener('message', function (e) {
+    output.data.set(e.data.result.data);
     buffer.putImageData(output, 0, 0);
 
     master.save();
-    master.translate(master.canvas.width * 0.5, master.canvas.height * 0.5);
-    master.rotate(-Math.PI * 0.5);
-    master.drawImage(buffer.canvas, -master.canvas.width * 0.5, -master.canvas.height * 0.5);
+
+    if (config.up) {
+      master.translate(0, canvas.height);
+      master.rotate(-Math.PI * 0.5);
+    }
+
+    master.drawImage(buffer.canvas, 0, 0);
     master.restore();
-  }
+  });
 
-  toggle = !toggle;
-}, false);
+  source.addEventListener('load', function () {
+    var angle = config.up ? Math.PI * 0.5 : 0;
+    var shift = config.up ? -1 * canvas.height : 0;
 
-worker.addEventListener('message', function (e) {
-  output.data.set(e.data.result.data);
+    buffer.rotate(angle);
+    buffer.drawImage(source, 0, shift);
+
+    worker.postMessage({
+      config: config,
+      source: buffer.getImageData(0, 0, canvas.height, canvas.width)
+    });
+  });
+
+  source.setAttribute('src', file);
 });
-
-source.addEventListener('load', function () {
-  buffer.translate(buffer.canvas.width * 0.5, buffer.canvas.height * 0.5);
-  buffer.rotate(Math.PI * 0.5);
-  buffer.drawImage(source, -buffer.canvas.width * 0.5, -buffer.canvas.height * 0.5);
-  master.drawImage(source, 0, 0);
-  worker.postMessage({ source: buffer.getImageData(0, 0, canvas.width, canvas.height) });
-});
-
-source.setAttribute('src', 'master.jpg');
 
 }());
+

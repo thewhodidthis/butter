@@ -1,9 +1,9 @@
 body {
-  margin: 0;
-  padding: 0.5rem;
-  overflow: hidden;
   box-sizing: border-box;
   font: 16px/1.25 arial, sans-serif;
+  margin: 0;
+  overflow: hidden;
+  padding: 0.5rem;
 }
 
 small {
@@ -11,23 +11,43 @@ small {
 }
 
 p {
-  margin: 0;
   font-size: 0.875rem;
+  margin: 0;
 }
 
 figure {
-  top: 50%;
   left: 50%;
+  margin: -180px 0 0 -270px;
   position: absolute;
   text-align: center;
-  margin: -180px 0 0 -320px;
+  top: 50%;
 }
 
 figcaption {
   margin: 0.5rem;
 }
 
-canvas {
+ul {
+  border: 1px solid #fff;
+  border-width: 1px 0 0 1px;
+  height: 360px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 540px;
+}
+
+li {
+  background: #bbb;
+  border: 1px solid #fff;
+  border-width: 0 1px 1px 0;
+  display: block;
+  float: left;
+  position: relative;
+}
+
+canvas,
+img {
   display: block;
 }
 
@@ -36,18 +56,13 @@ canvas {
 }
 
 .is-iframe figure {
-  top: 0;
   left: 0;
   margin: 0;
+  top: 0;
   width: 100%;
 }
 
 .is-iframe figcaption {
   display: none;
-}
-
-.is-iframe canvas {
-  width: 100%;
-  max-width: 100%;
 }
 
