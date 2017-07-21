@@ -26,7 +26,8 @@
   "eslintConfig": {
     "extends": "@thewhodidthis",
     "globals": {
-      "Uint32Array": true
+      "Uint32Array": true,
+      "Uint8ClampedArray": true
     }
   },
   "engines": {
