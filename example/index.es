@@ -6,9 +6,9 @@ if (window !== window.top) {
 }
 
 const params = [
-  { cutoff: '332200', up: true },
-  { cutoff: '77838c' },
-  { cutoff: '81aeb6', up: true, flip: true }
+  { threshold: '332200', up: true },
+  { threshold: '77838c' },
+  { threshold: '81aeb6', up: true, flip: true }
 ]
 
 Array.from(images).map(img => img.src).forEach((file, i) => {
