@@ -20,8 +20,7 @@
     "poststart": "rollup -f iife -n Butter index.es | buble > example/butter.js",
     "preexample": "eslint example/index.es",
     "example": "cd example; rollup -f iife index.es | buble > index.js",
-    "postexample": "open http://localhost:8000; php -S localhost:8000 -t example/",
-    "postpublish": "rsync -avruzLPC --del --exclude=.* ./example/ \"$(cat config)\""
+    "postexample": "open http://localhost:8000; php -S localhost:8000 -t example/"
   },
   "eslintConfig": {
     "extends": "@thewhodidthis",
