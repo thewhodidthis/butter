@@ -17,7 +17,7 @@
     "test": "browserify test | kpow",
     "prestart": "eslint index.es",
     "start": "rollup -f cjs index.es | buble > index.js",
-    "poststart": "rollup -f iife -n Butter index.es | buble > example/butter.js",
+    "poststart": "rollup -f iife -n butter index.es | buble > example/butter.js",
     "preexample": "eslint example/index.es",
     "example": "cd example; rollup -f iife index.es | buble > index.js",
     "postexample": "open http://localhost:8000; php -S localhost:8000 -t example/"
