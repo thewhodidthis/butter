@@ -58,14 +58,6 @@ img {
   overflow: hidden;
 }
 
-.is-iframe figure {
-  left: 0;
-  margin: 0;
-  top: 0;
-  width: 100%;
-}
-
 .is-iframe figcaption {
   display: none;
 }
-
