@@ -1,11 +1,13 @@
+'use strict'
+
 const kpow = require('kpow')
 const test = require('tape')
-const createFilter = require('./')
+const butter = require('./')
 
 kpow()
 
 test('will default', (t) => {
-  const filter = createFilter()
+  const filter = butter()
   const result = filter()
 
   t.equal(typeof filter, 'function', 'returns funtion on init')
@@ -16,7 +18,7 @@ test('will default', (t) => {
 test('will operate', (t) => {
   const source = new ImageData(1, 1)
 
-  const filter = createFilter()
+  const filter = butter()
   const result = filter(source)
 
   t.ok(result instanceof source.constructor, 'input/output type is a match')
