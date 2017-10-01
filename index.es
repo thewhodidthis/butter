@@ -1,4 +1,4 @@
-const Butter = ({ threshold = '5e7689', flip = false } = {}) => {
+const butter = ({ threshold = '5e7689', flip = false } = {}) => {
   // Over or under, black or white
   const aspect = flip ? -1 : 1
 
@@ -37,4 +37,4 @@ const Butter = ({ threshold = '5e7689', flip = false } = {}) => {
   }
 }
 
-export default Butter
+export default butter

@@ -1,14 +1,14 @@
 'use strict';
 
-var Butter = function (ref) {
+var butter = function (ref) {
   if ( ref === void 0 ) ref = {};
   var threshold = ref.threshold; if ( threshold === void 0 ) threshold = '5e7689';
   var flip = ref.flip; if ( flip === void 0 ) flip = false;
 
-  // Over or under (black/white)
+  // Over or under, black or white
   var aspect = flip ? -1 : 1;
 
-  // Pad cutoff if need be
+  // Pad threshold if need be
   var cutoff = parseInt((("ffffffff" + threshold)).slice(-8), 16);
 
   // Expects and returns out `ImageData`
@@ -48,5 +48,5 @@ var Butter = function (ref) {
   }
 };
 
-module.exports = Butter;
+module.exports = butter;
 
