@@ -3,6 +3,7 @@
 
 ### Setup
 ```sh
+# Install from github
 npm install thewhodidthis/butter
 ```
 
