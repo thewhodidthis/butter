@@ -1,27 +1,19 @@
-'use strict'
+import 'cutaway'
+import { assert, report } from 'tapeless'
+import createFilter from './index.es'
 
-const kpow = require('kpow')
-const test = require('tape')
-const butter = require('./')
+const { ok, equal } = assert
 
-kpow()
+const filter = createFilter()
+const { data } = filter()
 
-test('will default', (t) => {
-  const filter = butter()
-  const result = filter()
+equal(typeof filter, 'function', 'returns funtion on init', 'will default')
+equal(data.length, 4)
 
-  t.equal(typeof filter, 'function', 'returns funtion on init')
-  t.equal(result.data.length, 4)
-  t.end()
-})
+const source = new ImageData(1, 1)
+const result = filter(source)
 
-test('will operate', (t) => {
-  const source = new ImageData(1, 1)
+ok(result instanceof source.constructor, 'input/output type is a match', 'will operate')
+equal(result.data.length, source.data.length, 'input/output size is a match')
 
-  const filter = butter()
-  const result = filter(source)
-
-  t.ok(result instanceof source.constructor, 'input/output type is a match')
-  t.equal(result.data.length, source.data.length, 'input/output size is a match')
-  t.end()
-})
+report()
