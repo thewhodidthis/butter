@@ -6,45 +6,52 @@ var butter = function (ref) {
   var flip = ref.flip; if ( flip === void 0 ) flip = false;
 
   // Over or under, black or white
-  var aspect = flip ? -1 : 1;
+  var phase = flip ? -1 : 1;
 
-  // Pad threshold if need be
-  var cutoff = parseInt((("ffffffff" + threshold)).slice(-8), 16);
+  // Parse threshold, pad if need be
+  var limit = phase * parseInt((("ffffffff" + threshold)).slice(-8), 16);
 
-  // Expects and returns out `ImageData`
-  return function (ref) {
-    if ( ref === void 0 ) ref = {};
-    var h = ref.height; if ( h === void 0 ) h = 1;
-    var w = ref.width; if ( w === void 0 ) w = 1;
-    var data = ref.data; if ( data === void 0 ) data = new Uint8ClampedArray(4);
+  // Accepts and returns an `ImageData` like object
+  return function (target) {
+    if ( target === void 0 ) target = { data: [], width: 0, height: 0 };
 
-    var result = new ImageData(data, w, h);
-    var view32 = new Uint32Array(data.buffer);
+    var bitmap = new Uint32Array(target.data.buffer);
 
+    // Extract dimensions
+    var h = target.height;
+    var w = target.width;
+
+    // Scan through vertically, line by line
     for (var y = 0; y < h; y += 1) {
-      var start = y * w;
-      var limit = start + w;
-      var range = view32.subarray(start, limit);
-      var scope = { start: 0, limit: range.length };
+      // Chunk start
+      var a = y * w;
 
-      for (var x = 0; x < scope.limit; x += 1) {
-        var color = aspect * range[x];
-        var brink = aspect * cutoff;
+      // Chunk stop
+      var b = a + w;
 
-        if (color > brink && scope.start === 0) {
-          scope.start = x;
+      // Slice up
+      var chunk = bitmap.subarray(a, b);
+
+      // Go through each line horizontally, sort past the pixels matching color stop
+      for (var x = 0, start = 0; x < w; x += 1) {
+        var color = phase * chunk[x];
+
+        // Go ahead
+        if (color > limit && start === 0) {
+          start = x;
         }
 
-        if (color < brink && scope.start !== 0) {
-          range.subarray(scope.start, x).sort();
+        // Time's up
+        if (color < limit && start !== 0) {
+          chunk.subarray(start, x).sort();
 
           // Start again
-          scope.start = 0;
+          start = 0;
         }
       }
     }
 
-    return result
+    return target
   }
 };
 
