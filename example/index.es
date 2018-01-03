@@ -1,53 +1,54 @@
-const images = document.querySelectorAll('li > img')
+const images = document.querySelectorAll('canvas img')
 const boards = document.querySelectorAll('canvas')
 
 if (window !== window.top) {
   document.documentElement.classList.add('is-iframe')
 }
 
+const halfPI = Math.PI * 0.5
 const params = [
-  { threshold: '332200', up: true },
+  { threshold: '332200', up: 1 },
   { threshold: '77838c' },
-  { threshold: '81aeb6', up: true, flip: true }
+  { threshold: '81aeb6', up: 1, flip: 0 }
 ]
 
-Array.from(images).map(img => img.src).forEach((file, i) => {
+Array.from(images).map(img => img.alt).forEach((src, i) => {
   const config = params[i]
   const canvas = boards[i]
-  const master = canvas.getContext('2d')
+  const target = canvas.getContext('2d')
+
+  const a = config.up ? halfPI : 0
+  const y = config.up ? canvas.height : 0
+
   const buffer = canvas.cloneNode().getContext('2d')
 
-  const source = document.createElement('img')
-  const output = master.getImageData(0, 0, canvas.height, canvas.width)
+  buffer.rotate(a)
+
   const worker = new Worker('worker.js')
 
   worker.addEventListener('message', (e) => {
-    output.data.set(e.data.result.data)
-    buffer.putImageData(output, 0, 0)
+    buffer.putImageData(e.data.result, 0, 0)
 
-    master.save()
+    target.save()
 
     if (config.up) {
-      master.translate(0, canvas.height)
-      master.rotate(-Math.PI * 0.5)
+      target.translate(0, y)
+      target.rotate(-a)
     }
 
-    master.drawImage(buffer.canvas, 0, 0)
-    master.restore()
+    target.drawImage(buffer.canvas, 0, 0)
+    target.restore()
   })
 
-  source.addEventListener('load', () => {
-    const angle = config.up ? Math.PI * 0.5 : 0
-    const shift = config.up ? -1 * canvas.height : 0
+  const master = document.createElement('img')
 
-    buffer.rotate(angle)
-    buffer.drawImage(source, 0, shift)
+  master.addEventListener('load', () => {
+    buffer.drawImage(master, 0, -y)
 
-    worker.postMessage({
-      config,
-      source: buffer.getImageData(0, 0, canvas.height, canvas.width)
-    })
+    const source = buffer.getImageData(0, 0, canvas.height, canvas.width)
+
+    worker.postMessage({ config, source })
   })
 
-  source.setAttribute('src', file)
+  master.setAttribute('src', src)
 })

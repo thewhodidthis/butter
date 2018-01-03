@@ -1,58 +1,59 @@
 (function () {
 'use strict';
 
-var images = document.querySelectorAll('li > img');
+var images = document.querySelectorAll('canvas img');
 var boards = document.querySelectorAll('canvas');
 
 if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
 }
 
+var halfPI = Math.PI * 0.5;
 var params = [
-  { threshold: '332200', up: true },
+  { threshold: '332200', up: 1 },
   { threshold: '77838c' },
-  { threshold: '81aeb6', up: true, flip: true }
+  { threshold: '81aeb6', up: 1, flip: 0 }
 ];
 
-Array.from(images).map(function (img) { return img.src; }).forEach(function (file, i) {
+Array.from(images).map(function (img) { return img.alt; }).forEach(function (src, i) {
   var config = params[i];
   var canvas = boards[i];
-  var master = canvas.getContext('2d');
+  var target = canvas.getContext('2d');
+
+  var a = config.up ? halfPI : 0;
+  var y = config.up ? canvas.height : 0;
+
   var buffer = canvas.cloneNode().getContext('2d');
 
-  var source = document.createElement('img');
-  var output = master.getImageData(0, 0, canvas.height, canvas.width);
+  buffer.rotate(a);
+
   var worker = new Worker('worker.js');
 
   worker.addEventListener('message', function (e) {
-    output.data.set(e.data.result.data);
-    buffer.putImageData(output, 0, 0);
+    buffer.putImageData(e.data.result, 0, 0);
 
-    master.save();
+    target.save();
 
     if (config.up) {
-      master.translate(0, canvas.height);
-      master.rotate(-Math.PI * 0.5);
+      target.translate(0, y);
+      target.rotate(-a);
     }
 
-    master.drawImage(buffer.canvas, 0, 0);
-    master.restore();
+    target.drawImage(buffer.canvas, 0, 0);
+    target.restore();
   });
 
-  source.addEventListener('load', function () {
-    var angle = config.up ? Math.PI * 0.5 : 0;
-    var shift = config.up ? -1 * canvas.height : 0;
+  var master = document.createElement('img');
 
-    buffer.rotate(angle);
-    buffer.drawImage(source, 0, shift);
+  master.addEventListener('load', function () {
+    buffer.drawImage(master, 0, -y);
 
-    worker.postMessage({
-      config: config,
-      source: buffer.getImageData(0, 0, canvas.height, canvas.width)
-    });
+    var source = buffer.getImageData(0, 0, canvas.height, canvas.width);
+
+    worker.postMessage({ config: config, source: source });
   });
 
-  source.setAttribute('src', file);
+  master.setAttribute('src', src);
 });
 
 }());
