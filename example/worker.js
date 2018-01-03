@@ -1,7 +1,9 @@
-importScripts('butter.js');
+importScripts('filter.js')
 
-self.addEventListener('message', function (e) {
-  var filter = butter(e.data.config);
+self.addEventListener('message', (e) => {
+  const filter = butter(e.data.config)
 
-  self.postMessage({ result: filter(e.data.source) });
-});
+  self.postMessage({
+    result: filter(e.data.source)
+  })
+})
