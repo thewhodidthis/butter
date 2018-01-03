@@ -2,8 +2,8 @@
   "name": "@thewhodidthis/butter",
   "version": "1.1.2",
   "description": "Helps with pixel sorting",
-  "main": "index.js",
-  "module": "index.es",
+  "main": "index",
+  "module": "index.mjs",
   "homepage": "https://github.com/thewhodidthis/butter#readme",
   "repository": {
     "type": "git",
@@ -14,36 +14,32 @@
   },
   "scripts": {
     "pretest": "eslint test.js",
-    "test": "rollup -c node:x -f iife test.js | kpow",
-    "prestart": "eslint index.es",
-    "start": "rollup -f cjs index.es > index.js",
-    "poststart": "rollup -f iife -n butter index.es | buble > example/butter.js",
+    "test": "node test.js",
+    "prestart": "eslint index.mjs",
+    "start": "rollup -f cjs index.mjs | buble > index.js",
+    "poststart": "rollup -f iife -n filter index.mjs | buble > example/filter.js",
     "preexample": "eslint example/index.es",
-    "example": "cd example; rollup -f iife index.es | buble > index.js",
-    "postexample": "open http://localhost:8000; php -S localhost:8000 -t example/"
+    "example": "cd example; rollup -f iife index.es | buble > index.js"
   },
   "eslintConfig": {
-    "extends": "@thewhodidthis",
-    "globals": {
-      "Uint32Array": true,
-      "Uint8ClampedArray": true
-    }
+    "extends": "@thewhodidthis"
   },
   "engines": {
-    "node": ">=4.2.4",
-    "npm": ">=3.5.3"
+    "node": ">=6.4.0",
+    "npm": ">=3.11.0"
   },
   "dependencies": {},
   "devDependencies": {
     "@thewhodidthis/eslint-config": "latest",
     "buble": "latest",
-    "cutaway": "latest",
     "eslint": "latest",
-    "kpow": "latest",
     "rollup": "latest",
-    "rollup-config-x": "latest",
     "tapeless": "latest"
   },
+  "keywords": [
+    "pixels",
+    "canvas"
+  ],
   "author": "sChzs BkgNns <sotirios.bakagiannis@gmail.com> (https://www.thewhodidthis.com)",
   "license": "Unlicense"
 }
