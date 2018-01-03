@@ -1,19 +1,15 @@
-import 'cutaway'
-import { assert, report } from 'tapeless'
-import createFilter from './index.es'
+'use strict'
 
-const { ok, equal } = assert
+const { equal } = require('tapeless')
+const createFilter = require('./')
 
 const filter = createFilter()
 const { data } = filter()
 
-equal(typeof filter, 'function', 'returns funtion on init', 'will default')
-equal(data.length, 4)
+equal(typeof filter, 'function', 'returns lambda on init', 'will default')
+equal(data.length, 0)
 
-const source = new ImageData(1, 1)
+const source = { data: [1, 2, 3, 4] }
 const result = filter(source)
 
-ok(result instanceof source.constructor, 'input/output type is a match', 'will operate')
-equal(result.data.length, source.data.length, 'input/output size is a match')
-
-report()
+equal(result.data.length, source.data.length, 'input/output size is a match', 'will operate')
