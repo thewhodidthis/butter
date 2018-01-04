@@ -22,21 +22,21 @@ const filter = bender()
 const ninety = 0.5 * Math.PI
 
 source.addEventListener('load', () => {
-  buffer.rotate(ninety)
-  buffer.drawImage(source, 0, -canvas.height)
+    buffer.rotate(ninety)
+    buffer.drawImage(source, 0, -canvas.height)
 
-  const pixels = buffer.getImageData(0, 0, canvas.width, canvas.height)
-  const result = filter(pixels)
+    const pixels = buffer.getImageData(0, 0, canvas.width, canvas.height)
+    const result = filter(pixels)
 
-  buffer.putImageData(result, 0, 0)
+    buffer.putImageData(result, 0, 0)
 
-  master.translate(0, canvas.height)
-  master.rotate(-ninety)
-  master.drawImage(buffer.canvas, 0, 0)
+    master.translate(0, canvas.height)
+    master.rotate(-ninety)
+    master.drawImage(buffer.canvas, 0, 0)
 
-  const output = canvas.toDataURL('image/jpeg')
+    const output = canvas.toDataURL('image/jpeg')
 
-  target.setAttribute('src', output)
+    target.setAttribute('src', output)
 })
 
 source.setAttribute('crossOrigin', 'anonymous')
