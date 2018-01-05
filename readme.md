@@ -19,10 +19,10 @@ const canvas = Object.assign(master.canvas, { width: 180, height: 180 })
 const buffer = canvas.cloneNode().getContext('2d')
 
 const filter = bender()
-const ninety = 0.5 * Math.PI
+const upward = 0.5 * Math.PI
 
 source.addEventListener('load', () => {
-    buffer.rotate(ninety)
+    buffer.rotate(upward)
     buffer.drawImage(source, 0, -canvas.height)
 
     const pixels = buffer.getImageData(0, 0, canvas.width, canvas.height)
@@ -31,7 +31,7 @@ source.addEventListener('load', () => {
     buffer.putImageData(result, 0, 0)
 
     master.translate(0, canvas.height)
-    master.rotate(-ninety)
+    master.rotate(-upward)
     master.drawImage(buffer.canvas, 0, 0)
 
     const output = canvas.toDataURL('image/jpeg')
