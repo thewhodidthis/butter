@@ -8,7 +8,7 @@ if (window !== window.top) {
   document.documentElement.classList.add('is-iframe');
 }
 
-var halfPI = Math.PI * 0.5;
+var upward = Math.PI * 0.5;
 var params = [
   { threshold: '332200', up: 1 },
   { threshold: '77838c' },
@@ -20,7 +20,7 @@ Array.from(images).map(function (img) { return img.alt; }).forEach(function (src
   var canvas = boards[i];
   var target = canvas.getContext('2d');
 
-  var a = config.up ? halfPI : 0;
+  var a = config.up ? upward : 0;
   var y = config.up ? canvas.height : 0;
 
   var buffer = canvas.cloneNode().getContext('2d');
