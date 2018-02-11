@@ -17,9 +17,8 @@
     "test": "node test.js",
     "prestart": "eslint index.mjs",
     "start": "rollup -f cjs index.mjs | buble > index.js",
-    "poststart": "rollup -f iife -n butter index.mjs | buble > example/filter.js",
-    "preexample": "eslint example/index.es",
-    "example": "cd example; rollup -f iife index.es | buble > index.js"
+    "preexample": "eslint example/index.js",
+    "example": "rollup -f iife -n butter index.mjs | buble > example/filter.js"
   },
   "eslintConfig": {
     "extends": "@thewhodidthis"
