@@ -1,4 +1,4 @@
-importScripts('filter.js')
+importScripts('butter.js')
 
 self.addEventListener('message', (e) => {
   const filter = butter(e.data.config)
