@@ -7,9 +7,9 @@ if (window !== window.top) {
 
 const upward = Math.PI * 0.5
 const params = [
-  { threshold: '332200', up: 1 },
-  { threshold: '77838c' },
-  { threshold: '81aeb6', up: 1, flip: 0 }
+  { threshold: '207030ff', up: 1 },
+  { threshold: '808077ff' },
+  { threshold: 'bb2277ff', up: 1, flip: 1 }
 ]
 
 Array.from(images).map(img => img.alt).forEach((src, i) => {
