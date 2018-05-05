@@ -1,11 +1,23 @@
 'use strict';
 
-const butter = ({ threshold = '5e7689', flip = false } = {}) => {
-  // Over or under, black or white
+// # Butter
+// Helps with pixel sorting
+
+const butter = ({
+  // Specify color stop in hex including opacity, ends up getting reversed
+  // when running comparisons, so just feed in ABGR order for use with big endian systems
+  threshold = '00000000',
+
+  // Use this switch to decide color matching above or below threshold
+  flip = false
+} = {}) => {
+  // For multiplying color values, normally and by default white ranks
+  // higher than black in numeric terms. If the flip switch is set,
+  // minus white turns up lower than black
   const phase = flip ? -1 : 1;
 
-  // Parse threshold, pad if need be
-  const limit = phase * parseInt((`ffffffff${threshold}`).slice(-8), 16);
+  // Process threshold, reverse input string, get integer representation (0 - 4294967295)
+  const limit = phase * parseInt(threshold.match(/.{1,2}/g).reverse().join(''), 16);
 
   // Accepts and returns an `ImageData` like object
   return (target = { data: [], width: 0, height: 0 }) => {
@@ -16,29 +28,32 @@ const butter = ({ threshold = '5e7689', flip = false } = {}) => {
 
     // Scan through vertically, line by line
     for (let y = 0; y < h; y += 1) {
-      // Chunk start
+      // Calculate row bounds
       const a = y * w;
-
-      // Chunk stop
       const b = a + w;
 
-      // Slice up
-      const chunk = bitmap.subarray(a, b);
+      // Get current row
+      const strip = bitmap.subarray(a, b);
 
-      // Go through each line horizontally, sort past the pixels matching color stop
-      for (let x = 0, start = 0; x < w; x += 1) {
-        const color = phase * chunk[x];
+      // Iterate horizontally upto and including row width (extra step)
+      for (let x = 0, start = 0; x <= w; x += 1) {
+        // Is `NaN` when index hits row width
+        const color = phase * strip[x];
 
-        // Go ahead
-        if (color > limit && start === 0) {
+        // Check if current color is past threshold reference, ie. sorting approved
+        const above = color > limit;
+
+        // First match, take note of color index
+        if (!start && above) {
           start = x;
         }
 
-        // Time's up
-        if (color < limit && start !== 0) {
-          chunk.subarray(start, x).sort();
+        // Time's up, either a match was found or index hit row width
+        if (!above && start) {
+          // The upper bound is exclusive, explains the extra step
+          strip.subarray(start, x).sort();
 
-          // Start again
+          // All set for next pass
           start = 0;
         }
       }
