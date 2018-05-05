@@ -1,5 +1,5 @@
 ## Butter
-> Helps do pixel sorting
+> For pixel sorting
 
 ### Setup
 ```sh
