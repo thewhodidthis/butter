@@ -1,9 +1,5 @@
-const images = document.querySelectorAll('canvas img')
+const images = document.querySelectorAll('li > img')
 const boards = document.querySelectorAll('canvas')
-
-if (window !== window.top) {
-  document.documentElement.classList.add('is-iframe')
-}
 
 const upward = Math.PI * 0.5
 const params = [
@@ -12,7 +8,7 @@ const params = [
   { threshold: 'bb2277ff', up: 1, flip: 1 }
 ]
 
-Array.from(images).map(img => img.alt).forEach((src, i) => {
+Array.from(images).map(img => img.src).forEach((src, i) => {
   const config = params[i]
   const canvas = boards[i]
   const target = canvas.getContext('2d')
