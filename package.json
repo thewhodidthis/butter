@@ -27,12 +27,11 @@
     "node": ">=6.11.0",
     "npm": ">=3.10.10"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@thewhodidthis/eslint-config": "latest",
-    "eslint": "latest",
-    "rollup": "latest",
-    "tapeless": "latest"
+    "@thewhodidthis/eslint-config": "^0.0.11",
+    "eslint": "^6.8.0",
+    "rollup": "^1.31.1",
+    "tapeless": "^0.0.7"
   },
   "keywords": [
     "pixels",
