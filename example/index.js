@@ -1,6 +1,3 @@
-const images = document.querySelectorAll('li > img')
-const boards = document.querySelectorAll('canvas')
-
 const upward = Math.PI * 0.5
 const params = [
   { threshold: '207030ff', up: 1 },
@@ -8,10 +5,11 @@ const params = [
   { threshold: 'bb2277ff', up: 1, flip: 1 }
 ]
 
-Array.from(images).map(img => img.src).forEach((src, i) => {
-  const config = params[i]
-  const canvas = boards[i]
+const boards = document.querySelectorAll('canvas')
+
+Array.from(boards).forEach((canvas, i) => {
   const target = canvas.getContext('2d')
+  const config = params[i]
 
   const a = config.up ? upward : 0
   const y = config.up ? canvas.height : 0
@@ -46,5 +44,5 @@ Array.from(images).map(img => img.src).forEach((src, i) => {
     worker.postMessage({ config, source })
   })
 
-  master.setAttribute('src', src)
+  master.setAttribute('src', canvas.dataset.src)
 })
