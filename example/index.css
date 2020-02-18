@@ -1,12 +1,13 @@
 html {
   font: 16px/1.25 arial, sans-serif;
+  height: 100%;
 }
 
 body {
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
   margin: 0;
-  overflow: hidden;
-  padding: 0.5rem;
+  min-height: 100%;
 }
 
 a {
@@ -18,36 +19,16 @@ a:hover {
   text-decoration: underline;
 }
 
-small {
-  font-size: 0.75rem;
-}
-
 p {
   font-size: 0.875rem;
   margin: 0;
 }
 
-figure {
-  left: 50%;
-  margin: -180px 0 0 -270px;
-  position: absolute;
-  text-align: center;
-  top: 50%;
-}
-
-figure::before {
-  background: #fff;
-  content: "";
-  height: 1px;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 180px;
-  z-index: 101;
-}
-
-figcaption {
-  margin: 0.5rem 0 0;
+li {
+  background: silver;
+  display: block;
+  float: left;
+  position: relative;
 }
 
 ul {
@@ -61,7 +42,7 @@ ul {
 
 ul::before,
 ul::after {
-  background: #fff;
+  background: white;
   content: "";
   height: 100%;
   position: absolute;
@@ -77,22 +58,30 @@ ul::after {
   right: 180px;
 }
 
-li {
-  background: #bbb;
-  display: block;
-  float: left;
+figure {
+  margin: auto;
   position: relative;
 }
 
-canvas,
+figure::after {
+  background: white;
+  content: "";
+  height: 1px;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 180px;
+}
+
+figcaption {
+  margin: 0.5rem 0 0;
+  text-align: center;
+}
+
 img {
+  vertical-align: middle;
+}
+
+canvas {
   display: block;
-}
-
-.is-iframe {
-  overflow: hidden;
-}
-
-.is-iframe figcaption {
-  display: none;
 }
