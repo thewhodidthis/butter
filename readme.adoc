@@ -43,6 +43,6 @@ source.setAttribute('crossOrigin', 'anonymous')
 source.setAttribute('src', `//source.unsplash.com/random/${canvas.width}x${canvas.height}`)
 ```
 
-### More
+### Context
 - https://github.com/brandly/butter.js[Original butter.js]
 - https://github.com/kimasendorf/ASDFPixelSort[Kim Asendorf's processing code ASDFPixelSort]
