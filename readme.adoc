@@ -1,5 +1,5 @@
 ## Butter
-> For pixel sorting, a rewrite of https://github.com/brandly/butter.js[butter.js] based on https://github.com/kimasendorf/ASDFPixelSort[Kim Asendorf's ASDFPixelSort] original processing script.
+> For pixel sorting, a rewrite of https://github.com/brandly/butter.js[butter.js] based on https://github.com/kimasendorf/ASDFPixelSort[Kim Asendorf's ASDFPixelSort] original processing script
 
 ### Setup
 ```sh
