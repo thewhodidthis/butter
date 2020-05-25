@@ -1,15 +1,19 @@
-## Butter
+## about
 
-> For pixel sorting, a rewrite of https://github.com/brandly/butter.js[butter.js] based on https://github.com/kimasendorf/ASDFPixelSort[Kim Asendorf's ASDFPixelSort] original processing script
+For pixel sorting, a rewrite of [butter.js](https://github.com/brandly/butter.js) based on [Kim Asendorf's ASDFPixelSort](https://github.com/kimasendorf/ASDFPixelSort) original processing script.
 
-### Setup
+## setup
+
+Fetch latest from GitHub,
 
 ```sh
-# Fetch latest from github
+# Includes ES and CJS versions
 npm i thewhodidthis/butter
 ```
 
-### Usage
+## usage
+
+The default and only export is an anonymous function for initializing and which returns another function expecting `ImageData` type input. For example,
 
 ```js
 import bender from '@thewhodidthis/butter'
