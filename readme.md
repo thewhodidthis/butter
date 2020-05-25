@@ -13,7 +13,7 @@ npm i thewhodidthis/butter
 
 ## usage
 
-The default and only export is an anonymous function that accepts a settings objects and which returns another function expecting `ImageData` type input. For example,
+The default and only export is an anonymous function that accepts a settings objects and which returns another function expecting [`ImageData`](https://developer.mozilla.org/en-US/docs/Web/API/ImageData) type input. For example,
 
 ```js
 import bender from '@thewhodidthis/butter'
