@@ -4,10 +4,10 @@ For pixel sorting, a rewrite of [butter.js](https://github.com/brandly/butter.js
 
 ## setup
 
-Fetch latest from GitHub,
+Fetch latest from GitHub directly,
 
 ```sh
-# Includes ES and CJS versions
+# Includes ESM and CJS versions
 npm i thewhodidthis/butter
 ```
 
@@ -49,3 +49,7 @@ source.addEventListener('load', () => {
 source.setAttribute('crossOrigin', 'anonymous')
 source.setAttribute('src', `//source.unsplash.com/random/${canvas.width}x${canvas.height}`)
 ```
+
+## see also
+
+- [Pixel bending with butter and crook](https://thewhodidthis.com/pixel-bending-with-butter-and-crook/)
