@@ -4,11 +4,11 @@ For pixel sorting, a rewrite of [butter.js](https://github.com/brandly/butter.js
 
 ## setup
 
-Fetch latest from GitHub directly,
+Fetch latest from GitHub directly:
 
 ```sh
 # Includes ESM and CJS versions
-npm i thewhodidthis/butter
+npm install thewhodidthis/butter
 ```
 
 ## usage
