@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>butter.js</title>
+    <script type="module">
+      import "https://thewhodidthis.github.io/cutaway/main.js"
+      import { assert, report } from "https://thewhodidthis.github.io/tapeless/main.js"
+      import createFilter from "./main.js"
+
+      const { equal } = assert
+      const filter = createFilter()
+      const { data } = filter()
+
+      equal
+        .describe("returns lambda on init", "will default")
+        .test(typeof filter, "function")
+        .describe("data empty")
+        .test(data.length, 0)
+
+      const source = { data: [1, 2, 3, 4] }
+      const result = filter(source)
+
+      equal
+        .describe("input/output size is a match", "will operate")
+        .test(result.data.length, source.data.length)
+
+      report()
+    </script>
+  </head>
+  <body></body>
+</html>

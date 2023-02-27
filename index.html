@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="Helps with pixel sorting.">
+    <title>butter.js</title>
+    <script src="example.js" defer></script>
+    <style>
+      html {
+        font: medium/normal sans-serif;
+        height: 100%;
+      }
+      body {
+        display: grid;
+        margin: 0;
+        min-height: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      p {
+        text-align: center;
+      }
+      figcaption {
+        font-size: small;
+      }
+      figure {
+        margin: auto;
+        width: 100%;
+      }
+      figure figure {
+        aspect-ratio: 542 / 361;
+        display: grid;
+        gap: 1px;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 1fr 1fr;
+        max-width: 33.875rem;
+        width: 100%;
+      }
+      span {
+        background: silver;
+      }
+      canvas,
+      img {
+        aspect-ratio: 1 / 1;
+        display: block;
+        font-size: small;
+        height: 100%;
+        object-fit: cover;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Images from http://sipi.usc.edu/database/database.php -->
+    <figure>
+      <figure>
+        <span>
+          <img src="5.3.01.jpg" height="180" width="180" alt="Man">
+        </span>
+        <span>
+          <img src="4.2.05.jpg" height="180" width="180" alt="Airplane F-16">
+        </span>
+        <span>
+          <img src="4.2.06.jpg" height="180" width="180" alt="Sailboat on lake">
+        </span>
+        <span>
+          <canvas height="180" width="180" data-src="5.3.01.jpg">
+            <img src="5.3.01-after.png" height="180" width="180" alt="Screenshot: Man processed">
+          </canvas>
+        </span>
+        <span>
+          <canvas height="180" width="180" data-src="4.2.05.jpg">
+            <img src="4.2.05-after.png" height="180" width="180" alt="Screenshot: Airplane F-16 processed">
+          </canvas>
+        </span>
+        <span>
+          <canvas height="180" width="180" data-src="4.2.06.jpg">
+            <img src="4.2.06-after.png" height="180" width="180" alt="Screenshot: Sailboat on lake processed">
+          </canvas>
+        </span>
+      </figure>
+      <figcaption>
+        <p><strong><a href="https://github.com/thewhodidthis/butter">butter.js</a></strong> Helps with pixel sorting</p>
+      </figcaption>
+    </figure>
+  </body>
+</html>

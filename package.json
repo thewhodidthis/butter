@@ -1,0 +1,18 @@
+{
+  "name": "@thewhodidthis/butter",
+  "version": "3.0.0",
+  "private": true,
+  "description": "Helps with pixel sorting",
+  "homepage": "https://github.com/thewhodidthis/butter#readme",
+  "bugs": "https://github.com/thewhodidthis/butter/issues",
+  "repository": "github:thewhodidthis/butter",
+  "license": "ISC",
+  "author": "Thepersonwhodidthis <thewhodidthis@fastmail.com> (http://thewhodidthis.com/)",
+  "engines": {
+    "node": ">=14.17.0",
+    "npm": ">=6.14.13"
+  },
+  "main": "./main.js",
+  "type": "module",
+  "exports": "./main.js"
+}
