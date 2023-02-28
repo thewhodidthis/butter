@@ -25,33 +25,33 @@
       p {
         text-align: center;
       }
+      canvas {
+        background: silver center/cover no-repeat;
+        display: block;
+      }
+      img {
+        height: auto;
+        vertical-align: middle;
+      }
+      canvas,
+      img {
+        object-fit: cover;
+        max-width: 100%;
+      }
       figcaption {
         font-size: small;
       }
       figure {
         margin: auto;
-        width: 100%;
       }
       figure figure {
-        aspect-ratio: 542 / 361;
         display: grid;
         gap: 1px;
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: 1fr 1fr;
-        max-width: 33.875rem;
-        width: 100%;
       }
       span {
         background: silver;
-      }
-      canvas,
-      img {
-        aspect-ratio: 1 / 1;
-        display: block;
-        font-size: small;
-        height: 100%;
-        object-fit: cover;
-        width: 100%;
       }
     </style>
   </head>
